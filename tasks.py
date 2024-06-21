@@ -8,11 +8,11 @@ from PIL import Image
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
-from apnews import Robot as ApnewsRobot
+from apnews_rpa_selenium import ApnewsRpaSeleniumRobot as ApnewsRobot
 
 from robocorp.tasks import task
 from RPA.Excel.Files import Files as Excel
-from RPA.Browser.Selenium import Selenium
+
 
 logger = logging.getLogger(__name__)
 

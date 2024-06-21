@@ -12,7 +12,7 @@ from selenium.common.exceptions import NoSuchElementException
 logger = logging.getLogger(__name__)
 
 
-class Robot:
+class ApnewsPureSeleniumRobot:
 
     class SearchCategory(Enum):
         STORIES = "Stories"
@@ -21,6 +21,8 @@ class Robot:
 
 
     def __init__(self, timeout: int=10, browser_width: int=1280, browser_height: int=720, browser_log_level: int=3):
+        self.starting_url = "https://apnews.com/"
+
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument("headless")
         chrome_options.add_argument("--no-sandbox")
@@ -33,7 +35,7 @@ class Robot:
 
         self.wait = WebDriverWait(self.browser, timeout=timeout)
 
-        self.browser.get("https://apnews.com/")
+        self.browser.get(self.starting_url)
 
         self.accept_cookies()
 
@@ -59,6 +61,8 @@ class Robot:
 
     def search(self, search_phrase: str, from_date: date) -> list:
         result_list = list()
+
+        self.browser.get(self.starting_url)
 
         search_button = self.wait.until(expected_conditions.presence_of_element_located(
             (By.CSS_SELECTOR, "button.SearchOverlay-search-button")
@@ -94,12 +98,10 @@ class Robot:
             (By.CSS_SELECTOR, "div.SearchResultsModule-results div.PageList-items-item")
         ))
 
-        logger.debug("Found at least one article")
+        logger.debug("Order latest news first")
 
         sort_by_selectbox = self.wait.until(expected_conditions.presence_of_element_located((By.NAME, 's')))
         Select(sort_by_selectbox).select_by_visible_text('Newest')
-
-        logger.debug("Order latest news first")
 
         self.wait.until(expected_conditions.staleness_of(first_article))
 
