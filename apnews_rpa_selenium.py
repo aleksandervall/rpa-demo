@@ -3,7 +3,6 @@ from enum import Enum
 from datetime import datetime, date, timedelta
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.remote.webdriver import WebElement
-from selenium.common.exceptions import ElementNotInteractableException, ElementClickInterceptedException
 from SeleniumLibrary.errors import ElementNotFound
 
 from RPA.Browser.Selenium import Selenium
